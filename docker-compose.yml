@@ -1,0 +1,29 @@
+---
+version: '3.9'
+
+services:
+  drupal:
+    image: drupal:latest
+    ports:
+      - 80:80
+    restart: always
+  postgresql:
+    image: postgres:13
+    ports:
+      - 5432
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: qwerty
+      POSTGRES_DB: dvdrental
+  pg_dump:
+    image: vvosinsky/psql_dump
+    environment:
+      AWS_ACCESS_KEY_ID: 
+      AWS_SECRET_ACCESS_KEY: 
+      AWS_DEFAULT_REGION: eu-central-1
+      S3_BUCKET: ubersholder-docker-testing
+      S3_PATH: folder
+      POSTGRES_URL: ""
+      BACKUP_CRON_SCHEDULE: "*/1 * * * *"
+    restart: always
